@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hasan Shirafkan - Backend Developer</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 40px 20px;
+            line-height: 1.6;
+        }
+
+        body.rtl {
+            direction: rtl;
+            font-family: 'Segoe UI', 'Vazir', 'Iranian Sans', Tahoma, sans-serif;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+
+        .header {
+            background: linear-gradient(135deg, #2d3748 0%, #1a202c 100%);
+            color: white;
+            padding: 50px 60px;
+            position: relative;
+        }
+
+        .lang-toggle {
+            position: absolute;
+            top: 0;
+            left: 30px;
+            background: rgba(255, 255, 255, 0.95);
+            border: none;
+            border-radius: 0 0 12px 12px;
+            padding: 12px 20px 10px 20px;
+            color: #2d3748;
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            letter-spacing: 0.5px;
+        }
+
+        .lang-toggle:hover {
+            background: white;
+            transform: translateY(2px);
+            box-shadow: 0 6px 16px rgba(0,0,0,0.2);
+        }
+
+        body.rtl .lang-toggle {
+            left: auto;
+            right: 30px;
+        }
+
+        .photo-placeholder {
+            position: absolute;
+            top: 40px;
+            right: 60px;
+            width: 140px;
+            height: 140px;
+            border-radius: 50%;
+            border: 5px solid white;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+            overflow: hidden;
+            background: #f0f0f0;
+        }
+
+        body.rtl .photo-placeholder {
+            right: auto;
+            left: 60px;
+        }
+
+        .photo-placeholder img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .header h1 {
+            font-size: 42px;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        .header .title {
+            font-size: 20px;
+            color: #a0aec0;
+            margin-bottom: 25px;
+            font-weight: 300;
+        }
+
+        .contact-info {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 25px;
+            font-size: 14px;
+            max-width: 600px;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: #cbd5e0;
+        }
+
+        .contact-item::before {
+            content: '●';
+            color: #667eea;
+            font-size: 10px;
+        }
+
+        .contact-item a {
+            color: #cbd5e0;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .contact-item a:hover {
+            color: #667eea;
+        }
+
+        .content {
+            padding: 50px 60px;
+        }
+
+        .section {
+            margin-bottom: 40px;
+        }
+
+        .section-title {
+            font-size: 24px;
+            color: #2d3748;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #667eea;
+            font-weight: 600;
+            display: inline-block;
+        }
+
+        .summary {
+            color: #4a5568;
+            line-height: 1.8;
+            font-size: 15px;
+        }
+
+        .education-item, .experience-item {
+            margin-bottom: 25px;
+            padding-left: 20px;
+            border-left: 3px solid #e2e8f0;
+            position: relative;
+        }
+
+        body.rtl .education-item, 
+        body.rtl .experience-item {
+            padding-left: 0;
+            padding-right: 20px;
+            border-left: none;
+            border-right: 3px solid #e2e8f0;
+        }
+
+        .education-item::before, .experience-item::before {
+            content: '';
+            position: absolute;
+            left: -7px;
+            top: 5px;
+            width: 11px;
+            height: 11px;
+            background: #667eea;
+            border-radius: 50%;
+        }
+
+        body.rtl .education-item::before, 
+        body.rtl .experience-item::before {
+            left: auto;
+            right: -7px;
+        }
+
+        .job-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #2d3748;
+            margin-bottom: 5px;
+        }
+
+        .company {
+            color: #667eea;
+            font-weight: 500;
+            margin-bottom: 3px;
+        }
+
+        .date {
+            color: #718096;
+            font-size: 13px;
+            margin-bottom: 10px;
+        }
+
+        .description {
+            color: #4a5568;
+            line-height: 1.7;
+            font-size: 14px;
+        }
+
+        .description ul {
+            margin-top: 8px;
+            padding-left: 20px;
+        }
+
+        body.rtl .description ul {
+            padding-left: 0;
+            padding-right: 20px;
+        }
+
+        .description li {
+            margin-bottom: 6px;
+        }
+
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .skill-category {
+            background: #f7fafc;
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 4px solid #667eea;
+        }
+
+        body.rtl .skill-category {
+            border-left: none;
+            border-right: 4px solid #667eea;
+        }
+
+        .skill-category-title {
+            font-weight: 600;
+            color: #2d3748;
+            margin-bottom: 10px;
+            font-size: 15px;
+        }
+
+        .skill-category-content {
+            color: #4a5568;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        .languages {
+            display: flex;
+            gap: 30px;
+        }
+
+        .language-item {
+            background: #f7fafc;
+            padding: 15px 25px;
+            border-radius: 8px;
+            border-left: 4px solid #667eea;
+        }
+
+        body.rtl .language-item {
+            border-left: none;
+            border-right: 4px solid #667eea;
+        }
+
+        .language-name {
+            font-weight: 600;
+            color: #2d3748;
+            margin-bottom: 3px;
+        }
+
+        .language-level {
+            color: #718096;
+            font-size: 14px;
+        }
+
+        @media (max-width: 768px) {
+            .header, .content {
+                padding: 30px;
+            }
+
+            .photo-placeholder {
+                position: static;
+                margin: 0 auto 20px;
+            }
+
+            .header h1 {
+                font-size: 32px;
+                text-align: center;
+            }
+
+            .header .title {
+                text-align: center;
+            }
+
+            .contact-info {
+                justify-content: center;
+            }
+
+            .skills-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .lang-toggle {
+                position: static;
+                margin: 0 auto 20px;
+                display: block;
+                width: fit-content;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <button class="lang-toggle" onclick="toggleLanguage()">
+                <span class="lang-text">FA</span>
+            </button>
+            <div class="photo-placeholder">
+                <img src="https://media.licdn.com/dms/image/v2/D4D03AQGqY_2VYxH7ow/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1729689303573?e=1736985600&v=beta&t=qEYKz8qOVFYVd9tEcBqqYvP0xwHD8sVJ0mz0VqJqFsI" alt="Hasan Shirafkan">
+            </div>
+            <h1 class="name">Hasan Shirafkan</h1>
+            <div class="title job-title-text">Backend Developer</div>
+            <div class="contact-info">
+                <div class="contact-item"><a href="mailto:shirafkanzarinhasan@gmail.com">shirafkanzarinhasan@gmail.com</a></div>
+                <div class="contact-item"><a href="tel:+989057116752">+98 905 711 6752</a></div>
+                <div class="contact-item"><a href="https://www.linkedin.com/in/artpy-shirafkan-387828292/" target="_blank">LinkedIn</a></div>
+                <div class="contact-item"><a href="https://github.com/Rtapy" target="_blank">GitHub</a></div>
+                <div class="contact-item location-text">Hamedan, Iran</div>
+            </div>
+        </div>
+
+        <div class="content" id="content">
+            <!-- English Content -->
+            <div class="section">
+                <h2 class="section-title section-summary">Professional Summary</h2>
+                <p class="summary summary-text">
+                    Backend Developer specializing in Django and scalable software architectures, with hands-on experience in multi-tenant SaaS systems, containerized deployments, and real-time computer vision applications. Passionate about building reliable backend services, integrating AI/ML solutions, and contributing to technically meaningful projects.
+                </p>
+            </div>
+
+            <div class="section">
+                <h2 class="section-title section-experience">Experience</h2>
+                
+                <div class="experience-item">
+                    <div class="job-title exp1-title">Backend Developer</div>
+                    <div class="company exp1-company">Freelance — Attendance Automation System</div>
+                    <div class="date exp1-date">Remote / Project-based</div>
+                    <div class="description">
+                        <ul class="exp1-list">
+                            <li>Designed and developed a centralized attendance and user management system used across multiple branches</li>
+                            <li>Integrated real-time face recognition (InsightFace/DeepFace) to replace physical attendance devices</li>
+                            <li>Built an admin dashboard with role management, reporting, and audit logs</li>
+                            <li>Result: Significantly reduced HR management overhead and eliminated hardware attendance costs</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="experience-item">
+                    <div class="job-title exp2-title">Backend Developer</div>
+                    <div class="company exp2-company">Phoenix Life — Digital Health Platform</div>
+                    <div class="date exp2-date">2023 – Present</div>
+                    <div class="description">
+                        <ul class="exp2-list">
+                            <li>Developed and integrated APIs for interoperability with HIS and LIS hospital/lab systems</li>
+                            <li>Designed and implemented multi-tenant architecture to serve multiple medical partners securely and independently</li>
+                            <li>Containerized and deployed the platform using Docker and CI/CD workflows for stable and reproducible deployments</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="experience-item">
+                    <div class="job-title exp3-title">Backend Developer</div>
+                    <div class="company exp3-company">FinTech / Crypto Platform</div>
+                    <div class="date exp3-date">2024 – Present (In Progress)</div>
+                    <div class="description">
+                        <ul class="exp3-list">
+                            <li>Working on a secure backend infrastructure involving wallet operations and financial workflows</li>
+                            <li>Implementing robust service architecture and environment-containerized deployment pipelines</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2 class="section-title section-education">Education</h2>
+                <div class="education-item">
+                    <div class="job-title edu-title">B.Sc. in Computer Engineering</div>
+                    <div class="company edu-company">IAUH</div>
+                    <div class="date edu-date">Sep 2021 – Present</div>
+                    <div class="description edu-desc">
+                        Active participation in university technology and research groups
+                    </div>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2 class="section-title section-skills">Technical Skills</h2>
+                <div class="skills-grid">
+                    <div class="skill-category">
+                        <div class="skill-category-title skill1-title">Languages & Frameworks</div>
+                        <div class="skill-category-content skill1-content">Python, Django, Django REST Framework</div>
+                    </div>
+                    <div class="skill-category">
+                        <div class="skill-category-title skill2-title">Databases</div>
+                        <div class="skill-category-content skill2-content">PostgreSQL, MySQL, SQLite</div>
+                    </div>
+                    <div class="skill-category">
+                        <div class="skill-category-title skill3-title">Architectures</div>
+                        <div class="skill-category-content skill3-content">RESTful services, Modular Monolith, Microservices, Multi-Tenant SaaS</div>
+                    </div>
+                    <div class="skill-category">
+                        <div class="skill-category-title skill4-title">DevOps & Tools</div>
+                        <div class="skill-category-content skill4-content">Docker, Docker Compose, Git, GitHub, CI/CD (GitLab CI)</div>
+                    </div>
+                    <div class="skill-category">
+                        <div class="skill-category-title skill5-title">Cloud & Deployment</div>
+                        <div class="skill-category-content skill5-content">Nginx, Linux server administration, basic Kubernetes</div>
+                    </div>
+                    <div class="skill-category">
+                        <div class="skill-category-title skill6-title">AI & Computer Vision</div>
+                        <div class="skill-category-content skill6-content">OpenCV, face recognition (InsightFace, DeepFace)</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2 class="section-title section-languages">Languages</h2>
+                <div class="languages">
+                    <div class="language-item">
+                        <div class="language-name lang1-name">Persian</div>
+                        <div class="language-level lang1-level">Native</div>
+                    </div>
+                    <div class="language-item">
+                        <div class="language-name lang2-name">English</div>
+                        <div class="language-level lang2-level">Working Proficiency</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const translations = {
+            en: {
+                langBtn: 'FA',
+                name: 'Hasan Shirafkan',
+                jobTitle: 'Backend Developer',
+                location: 'Hamedan, Iran',
+                summary: 'Professional Summary',
+                summaryText: 'Backend Developer specializing in Django and scalable software architectures, with hands-on experience in multi-tenant SaaS systems, containerized deployments, and real-time computer vision applications. Passionate about building reliable backend services, integrating AI/ML solutions, and contributing to technically meaningful projects.',
+                experience: 'Experience',
+                exp1Title: 'Backend Developer',
+                exp1Company: 'Freelance — Attendance Automation System',
+                exp1Date: 'Remote / Project-based',
+                exp1List: [
+                    'Designed and developed a centralized attendance and user management system used across multiple branches',
+                    'Integrated real-time face recognition (InsightFace/DeepFace) to replace physical attendance devices',
+                    'Built an admin dashboard with role management, reporting, and audit logs',
+                    'Result: Significantly reduced HR management overhead and eliminated hardware attendance costs'
+                ],
+                exp2Title: 'Backend Developer',
+                exp2Company: 'Phoenix Life — Digital Health Platform',
+                exp2Date: '2023 – Present',
+                exp2List: [
+                    'Developed and integrated APIs for interoperability with HIS and LIS hospital/lab systems',
+                    'Designed and implemented multi-tenant architecture to serve multiple medical partners securely and independently',
+                    'Containerized and deployed the platform using Docker and CI/CD workflows for stable and reproducible deployments'
+                ],
+                exp3Title: 'Backend Developer',
+                exp3Company: 'FinTech / Crypto Platform',
+                exp3Date: '2024 – Present (In Progress)',
+                exp3List: [
+                    'Working on a secure backend infrastructure involving wallet operations and financial workflows',
+                    'Implementing robust service architecture and environment-containerized deployment pipelines'
+                ],
+                education: 'Education',
+                eduTitle: 'B.Sc. in Computer Engineering',
+                eduCompany: 'IAUH',
+                eduDate: 'Sep 2021 – Present',
+                eduDesc: 'Active participation in university technology and research groups',
+                skills: 'Technical Skills',
+                skill1Title: 'Languages & Frameworks',
+                skill1Content: 'Python, Django, Django REST Framework',
+                skill2Title: 'Databases',
+                skill2Content: 'PostgreSQL, MySQL, SQLite',
+                skill3Title: 'Architectures',
+                skill3Content: 'RESTful services, Modular Monolith, Microservices, Multi-Tenant SaaS',
+                skill4Title: 'DevOps & Tools',
+                skill4Content: 'Docker, Docker Compose, Git, GitHub, CI/CD (GitLab CI)',
+                skill5Title: 'Cloud & Deployment',
+                skill5Content: 'Nginx, Linux server administration, basic Kubernetes',
+                skill6Title: 'AI & Computer Vision',
+                skill6Content: 'OpenCV, face recognition (InsightFace, DeepFace)',
+                languages: 'Languages',
+                lang1Name: 'Persian',
+                lang1Level: 'Native',
+                lang2Name: 'English',
+                lang2Level: 'Working Proficiency'
+            },
+            fa: {
+                langBtn: 'EN',
+                name: 'حسن شیرافکن',
+                jobTitle: 'توسعه‌دهنده Backend',
+                location: 'همدان، ایران',
+                summary: 'خلاصه حرفه‌ای',
+                summaryText: 'توسعه‌دهنده Backend متخصص در Django و معماری‌های نرم‌افزاری مقیاس‌پذیر، با تجربه عملی در طراحی سیستم‌های Multi-Tenant SaaS، استقرارهای Containerized و پروژه‌های Computer Vision در زمان واقعی. علاقه‌مند به ساخت سرویس‌های پایدار و قابل اعتماد، یکپارچه‌سازی راهکارهای AI/ML و مشارکت در پروژه‌های نوآورانه و تاثیرگذار.',
+                experience: 'سوابق کاری',
+                exp1Title: 'Backend Developer',
+                exp1Company: 'فریلنس — سیستم اتوماسیون حضور و غیاب (شبکه کتابخانه‌ها)',
+                exp1Date: 'دورکاری / پروژه‌ای',
+                exp1List: [
+                    'طراحی و توسعه سیستم متمرکز مدیریت حضور و کاربران برای چندین شعبه',
+                    'یکپارچه‌سازی تشخیص چهره در لحظه جهت حذف وابستگی به دستگاه‌های حضور و غیاب سخت‌افزاری',
+                    'توسعه داشبورد مدیریت با کنترل نقش‌ها، گزارش‌دهی و ثبت رویدادها',
+                    'نتیجه: کاهش چشمگیر هزینه‌های منابع انسانی و حذف هزینه‌های خرید و نگهداری دستگاه‌های حضور و غیاب'
+                ],
+                exp2Title: 'Backend Developer',
+                exp2Company: 'شرکت ققنوس لایف — پلتفرم سلامت دیجیتال',
+                exp2Date: '۱۴۰۲ – تاکنون',
+                exp2List: [
+                    'توسعه و یکپارچه‌سازی APIها جهت اتصال با سیستم‌های HIS و LIS بیمارستان‌ها و آزمایشگاه‌ها',
+                    'طراحی و پیاده‌سازی معماری Multi-Tenant جهت سرویس‌دهی مستقل به چندین مرکز درمانی',
+                    'Dockerize و استقرار پایدار سرویس‌ها همراه با CI/CD و بهینه‌سازی فرآیندهای انتشار نسخه'
+                ],
+                exp3Title: 'Backend Developer',
+                exp3Company: 'پلتفرم FinTech / Crypto',
+                exp3Date: '۱۴۰۳ – تاکنون (در حال توسعه)',
+                exp3List: [
+                    'طراحی و پیاده‌سازی زیرساخت Backend برای عملیات کیف‌پول و گردش‌های مالی',
+                    'ایجاد معماری سرویس پایدار و استقرار Containerized در محیط‌های عملیاتی'
+                ],
+                education: 'تحصیلات',
+                eduTitle: 'کارشناسی مهندسی کامپیوتر',
+                eduCompany: 'دانشگاه آزاد اسلامی',
+                eduDate: '۱۴۰۰ – تاکنون',
+                eduDesc: 'فعال در فعالیت‌های علمی و پژوهشی دانشگاه',
+                skills: 'مهارت‌های فنی',
+                skill1Title: 'زبان‌ها و فریم‌ورک‌ها',
+                skill1Content: 'Python، Django، Django REST Framework',
+                skill2Title: 'پایگاه‌داده‌ها',
+                skill2Content: 'PostgreSQL، MySQL، SQLite',
+                skill3Title: 'معماری‌ها',
+                skill3Content: 'RESTful Services، Modular Monolith، Microservices، Multi-Tenant SaaS',
+                skill4Title: 'DevOps و ابزارها',
+                skill4Content: 'Docker، Docker Compose، Git، GitHub، CI/CD (GitLab CI)',
+                skill5Title: 'Cloud & Deployment',
+                skill5Content: 'Nginx، مدیریت سرورهای Linux، آشنایی با Kubernetes',
+                skill6Title: 'AI & Computer Vision',
+                skill6Content: 'OpenCV، تشخیص چهره با InsightFace و DeepFace',
+                languages: 'زبان‌ها',
+                lang1Name: 'فارسی',
+                lang1Level: 'زبان مادری',
+                lang2Name: 'انگلیسی',
+                lang2Level: 'تسلط کاری'
+            }
+        };
+
+        let currentLang = 'en';
+
+        function toggleLanguage() {
+            currentLang = currentLang === 'en' ? 'fa' : 'en';
+            const t = translations[currentLang];
+            
+            // Toggle RTL
+            document.body.classList.toggle('rtl', currentLang === 'fa');
+            
+            // Update button text
+            document.querySelector('.lang-text').textContent = t.langBtn;
+            
+            // Update name
+            document.querySelector('.name').textContent = t.name;
+            
+            // Update all content
+            document.querySelector('.job-title-text').textContent = t.jobTitle;
+            document.querySelector('.location-text').textContent = t.location;
+            document.querySelector('.section-summary').textContent = t.summary;
+            document.querySelector('.summary-text').textContent = t.summaryText;
+            document.querySelector('.section-experience').textContent = t.experience;
+            
+            // Experience 1
+            document.querySelector('.exp1-title').textContent = t.exp1Title;
+            document.querySelector('.exp1-company').textContent = t.exp1Company;
+            document.querySelector('.exp1-date').textContent = t.exp1Date;
+            const exp1List = document.querySelector('.exp1-list');
+            exp1List.innerHTML = t.exp1List.map(item => `<li>${item}</li>`).join('');
+            
+            // Experience 2
+            document.querySelector('.exp2-title').textContent = t.exp2Title;
+            document.querySelector('.exp2-company').textContent = t.exp2Company;
+            document.querySelector('.exp2-date').textContent = t.exp2Date;
+            const exp2List = document.querySelector('.exp2-list');
+            exp2List.innerHTML = t.exp2List.map(item => `<li>${item}</li>`).join('');
+            
+            // Experience 3
+            document.querySelector('.exp3-title').textContent = t.exp3Title;
+            document.querySelector('.exp3-company').textContent = t.exp3Company;
+            document.querySelector('.exp3-date').textContent = t.exp3Date;
+            const exp3List = document.querySelector('.exp3-list');
+            exp3List.innerHTML = t.exp3List.map(item => `<li>${item}</li>`).join('');
+            
+            // Education
+            document.querySelector('.section-education').textContent = t.education;
+            document.querySelector('.edu-title').textContent = t.eduTitle;
+            document.querySelector('.edu-company').textContent = t.eduCompany;
+            document.querySelector('.edu-date').textContent = t.eduDate;
+            document.querySelector('.edu-desc').textContent = t.eduDesc;
+            
+            // Skills
+            document.querySelector('.section-skills').textContent = t.skills;
+            document.querySelector('.skill1-title').textContent = t.skill1Title;
+            document.querySelector('.skill1-content').textContent = t.skill1Content;
+            document.querySelector('.skill2-title').textContent = t.skill2Title;
+            document.querySelector('.skill2-content').textContent = t.skill2Content;
+            document.querySelector('.skill3-title').textContent = t.skill3Title;
+            document.querySelector('.skill3-content').textContent = t.skill3Content;
+            document.querySelector('.skill4-title').textContent = t.skill4Title;
+            document.querySelector('.skill4-content').textContent = t.skill4Content;
+            document.querySelector('.skill5-title').textContent = t.skill5Title;
+            document.querySelector('.skill5-content').textContent = t.skill5Content;
+            document.querySelector('.skill6-title').textContent = t.skill6Title;
+            document.querySelector('.skill6-content').textContent = t.skill6Content;
+            
+            // Languages
+            document.querySelector('.section-languages').textContent = t.languages;
+            document.querySelector('.lang1-name').textContent = t.lang1Name;
+            document.querySelector('.lang1-level').textContent = t.lang1Level;
+            document.querySelector('.lang2-name').textContent = t.lang2Name;
+            document.querySelector('.lang2-level').textContent = t.lang2Level;
+        }
+    </script>
+</body>
+</html>
